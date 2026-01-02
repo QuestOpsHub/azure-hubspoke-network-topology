@@ -13,7 +13,7 @@
 # }
 
 module "private_dns_zone" {
-  source = "git::https://github.com/QuestOpsHub/terraform-azurerm-private-dns-zone.git?ref=v1.0.0"
+  source = "git::https://github.com/QuestOpsHub/terraform-azurerm-private-dns-zone.git?ref=v1.0.1"
 
   for_each            = var.private_dns_zone
   name                = each.value.name
