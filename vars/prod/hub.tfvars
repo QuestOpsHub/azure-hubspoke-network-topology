@@ -13,9 +13,9 @@ helpers = {
   deployment_short  = "hub"
   source            = "terraform"
   cost_center       = "6001"
-  reason            = "jira-12345"
+  reason            = "JIRA-12345"
   created_by        = "veera-bhadra"
-  team              = "platform-team"
+  team              = "infrateam"
   owner             = "veera-bhadra"
 }
 
