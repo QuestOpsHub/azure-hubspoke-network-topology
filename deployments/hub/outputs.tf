@@ -1,0 +1,20 @@
+#---------------
+# Random String
+#---------------
+output "random_string" {
+  value = module.random_string
+}
+
+#----------------
+# Resource Group
+#---------------
+output "resource_group" {
+  value = module.resource_group
+}
+
+#-----------------
+# Virtual Network
+#-----------------
+output "virtual_network" {
+  value = module.virtual_network
+}
