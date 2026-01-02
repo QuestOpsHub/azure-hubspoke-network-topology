@@ -23,9 +23,9 @@ helpers = {
 # Resource Group
 #----------------
 resource_group = {
-  network = {
-    name = "rg-network"
-  },
+  default = {
+    name = "rg"
+  }
 }
 
 #-----------------
@@ -34,7 +34,7 @@ resource_group = {
 virtual_network = {
   default = {
     name           = "vnet"
-    resource_group = "network"
+    resource_group = "default"
     address_space  = ["20.0.0.0/16"]
     subnets = {
       default = {
@@ -59,7 +59,7 @@ virtual_network = {
         address_prefixes = ["20.0.4.0/26"]
       },
     }
-  },
+  }
 }
 
 #------------------
@@ -68,7 +68,7 @@ virtual_network = {
 private_dns_zone = {
   sqlServer = {
     name           = "privatelink.database.windows.net"
-    resource_group = "network"
+    resource_group = "default"
     virtual_network_ids = [
       {
         name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
@@ -78,7 +78,7 @@ private_dns_zone = {
   },
   blob = {
     name           = "privatelink.blob.core.windows.net"
-    resource_group = "network"
+    resource_group = "default"
     virtual_network_ids = [
       {
         name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
@@ -88,7 +88,7 @@ private_dns_zone = {
   },
   vault = {
     name           = "privatelink.vaultcore.azure.net"
-    resource_group = "network"
+    resource_group = "default"
     virtual_network_ids = [
       {
         name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
@@ -98,7 +98,7 @@ private_dns_zone = {
   },
   registry = {
     name           = "privatelink.azurecr.io"
-    resource_group = "network"
+    resource_group = "default"
     virtual_network_ids = [
       {
         name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
@@ -108,7 +108,7 @@ private_dns_zone = {
   },
   dataFactory = {
     name           = "privatelink.datafactory.azure.net"
-    resource_group = "network"
+    resource_group = "default"
     virtual_network_ids = [
       {
         name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
@@ -118,7 +118,7 @@ private_dns_zone = {
   },
   MongoDB = {
     name           = "privatelink.mongo.cosmos.azure.com"
-    resource_group = "network"
+    resource_group = "default"
     virtual_network_ids = [
       {
         name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
@@ -128,7 +128,7 @@ private_dns_zone = {
   },
   Sql = {
     name           = "privatelink.documents.azure.com"
-    resource_group = "network"
+    resource_group = "default"
     virtual_network_ids = [
       {
         name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
