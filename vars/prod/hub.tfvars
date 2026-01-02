@@ -23,8 +23,8 @@ helpers = {
 # Resource Group
 #----------------
 resource_group = {
-  default = {
-    name = "rg"
+  network = {
+    name = "rg-network"
   },
 }
 
@@ -34,7 +34,7 @@ resource_group = {
 virtual_network = {
   default = {
     name           = "vnet"
-    resource_group = "default"
+    resource_group = "network"
     address_space  = ["20.0.0.0/16"]
     subnets = {
       default = {
@@ -59,5 +59,81 @@ virtual_network = {
         address_prefixes = ["20.0.4.0/26"]
       },
     }
+  },
+}
+
+#------------------
+# Private Dns Zone
+#------------------
+private_dns_zone = {
+  sqlServer = {
+    name           = "privatelink.database.windows.net"
+    resource_group = "network"
+    virtual_network_ids = [
+      {
+        name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
+        vnet_id = "/subscriptions/ba143abd-03c0-43fc-bb1f-5bf74803b418/resourceGroups/rg-qoh-hub-jumpbox-cus/providers/Microsoft.Network/virtualNetworks/vnet-qoh-hub-jumpbox-cus"
+      }
+    ]
+  },
+  blob = {
+    name           = "privatelink.blob.core.windows.net"
+    resource_group = "network"
+    virtual_network_ids = [
+      {
+        name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
+        vnet_id = "/subscriptions/ba143abd-03c0-43fc-bb1f-5bf74803b418/resourceGroups/rg-qoh-hub-jumpbox-cus/providers/Microsoft.Network/virtualNetworks/vnet-qoh-hub-jumpbox-cus"
+      }
+    ]
+  },
+  vault = {
+    name           = "privatelink.vaultcore.azure.net"
+    resource_group = "network"
+    virtual_network_ids = [
+      {
+        name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
+        vnet_id = "/subscriptions/ba143abd-03c0-43fc-bb1f-5bf74803b418/resourceGroups/rg-qoh-hub-jumpbox-cus/providers/Microsoft.Network/virtualNetworks/vnet-qoh-hub-jumpbox-cus"
+      }
+    ]
+  },
+  registry = {
+    name           = "privatelink.azurecr.io"
+    resource_group = "network"
+    virtual_network_ids = [
+      {
+        name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
+        vnet_id = "/subscriptions/ba143abd-03c0-43fc-bb1f-5bf74803b418/resourceGroups/rg-qoh-hub-jumpbox-cus/providers/Microsoft.Network/virtualNetworks/vnet-qoh-hub-jumpbox-cus"
+      }
+    ]
+  },
+  dataFactory = {
+    name           = "privatelink.datafactory.azure.net"
+    resource_group = "network"
+    virtual_network_ids = [
+      {
+        name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
+        vnet_id = "/subscriptions/ba143abd-03c0-43fc-bb1f-5bf74803b418/resourceGroups/rg-qoh-hub-jumpbox-cus/providers/Microsoft.Network/virtualNetworks/vnet-qoh-hub-jumpbox-cus"
+      }
+    ]
+  },
+  MongoDB = {
+    name           = "privatelink.mongo.cosmos.azure.com"
+    resource_group = "network"
+    virtual_network_ids = [
+      {
+        name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
+        vnet_id = "/subscriptions/ba143abd-03c0-43fc-bb1f-5bf74803b418/resourceGroups/rg-qoh-hub-jumpbox-cus/providers/Microsoft.Network/virtualNetworks/vnet-qoh-hub-jumpbox-cus"
+      }
+    ]
+  },
+  Sql = {
+    name           = "privatelink.documents.azure.com"
+    resource_group = "network"
+    virtual_network_ids = [
+      {
+        name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
+        vnet_id = "/subscriptions/ba143abd-03c0-43fc-bb1f-5bf74803b418/resourceGroups/rg-qoh-hub-jumpbox-cus/providers/Microsoft.Network/virtualNetworks/vnet-qoh-hub-jumpbox-cus"
+      }
+    ]
   },
 }
