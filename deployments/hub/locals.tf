@@ -4,9 +4,10 @@ locals {
   timestamp_tag = {
     creation_timestamp = local.timestamp_sanitized
   }
-  resource_suffix = "${var.helpers.project_short}-${var.helpers.deployment_short}-${var.helpers.environment}-${var.helpers.region_short}"
+  resource_suffix = "${var.helpers.project_short}-${var.helpers.sub_project_short}-${var.helpers.deployment_short}-${var.helpers.environment}-${var.helpers.region_short}"
   common_tags = {
     project     = var.helpers.project
+    sub_project = var.helpers.sub_project
     environment = var.helpers.environment
     region      = var.helpers.region
     source      = var.helpers.source
