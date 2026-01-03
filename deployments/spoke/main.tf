@@ -147,7 +147,7 @@ locals {
 }
 
 module "storage_account" {
-  source = "git::https://github.com/QuestOpsHub/QuestOpsHub-terraform-azure-modules.git//storageAccount?ref=main"
+  source = "git::https://github.com/QuestOpsHub/terraform-azurerm-storage-account.git?ref=v1.0.0"
 
   for_each                         = var.storage_account
   name                             = lower(replace("${each.value.name}-${local.resource_suffix}-${module.random_string.result}", "/[[:^alnum:]]/", ""))
