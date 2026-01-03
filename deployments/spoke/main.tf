@@ -69,6 +69,36 @@ module "virtual_network" {
   )
 }
 
+#---------------------------------------
+# Hub <-> Spoke Virtual Network Peering
+#---------------------------------------
+module "hub_spoke_peering" {
+  source = "git::https://github.com/QuestOpsHub/terraform-azurerm-virtual-network-peering.git?ref=v1.0.0"
+
+  providers = {
+    azurerm.hub   = azurerm.hub
+    azurerm.spoke = azurerm
+  }
+
+  hub_to_spoke                       = "${data.terraform_remote_state.hub.outputs.virtual_network[var.hub_spoke_peering.hub_vnet].name}_to_${module.virtual_network[var.hub_spoke_peering.spoke_vnet].name}"
+  hub_rg_name                        = data.terraform_remote_state.hub.outputs.virtual_network[var.hub_spoke_peering.hub_vnet].resource_group_name
+  hub_vnet_name                      = data.terraform_remote_state.hub.outputs.virtual_network[var.hub_spoke_peering.hub_vnet].name
+  hub_vnet_id                        = data.terraform_remote_state.hub.outputs.virtual_network[var.hub_spoke_peering.hub_vnet].id
+  peer1_allow_virtual_network_access = lookup(var.hub_spoke_peering, "peer1_allow_virtual_network_access", true)
+  peer1_allow_forwarded_traffic      = lookup(var.hub_spoke_peering, "peer1_allow_forwarded_traffic", false)
+  peer1_allow_gateway_transit        = lookup(var.hub_spoke_peering, "peer1_allow_gateway_transit", false)
+  peer1_use_remote_gateways          = lookup(var.hub_spoke_peering, "peer1_use_remote_gateways", false)
+
+  spoke_to_hub                       = "${module.virtual_network[var.hub_spoke_peering.spoke_vnet].name}_to_${data.terraform_remote_state.hub.outputs.virtual_network[var.hub_spoke_peering.hub_vnet].name}"
+  spoke_rg_name                      = module.virtual_network[var.hub_spoke_peering.spoke_vnet].resource_group_name
+  spoke_vnet_name                    = module.virtual_network[var.hub_spoke_peering.spoke_vnet].name
+  spoke_vnet_id                      = module.virtual_network[var.hub_spoke_peering.spoke_vnet].id
+  peer2_allow_virtual_network_access = lookup(var.hub_spoke_peering, "peer2_allow_virtual_network_access", true)
+  peer2_allow_forwarded_traffic      = lookup(var.hub_spoke_peering, "peer2_allow_forwarded_traffic", false)
+  peer2_allow_gateway_transit        = lookup(var.hub_spoke_peering, "peer2_allow_gateway_transit", false)
+  peer2_use_remote_gateways          = lookup(var.hub_spoke_peering, "peer2_use_remote_gateways", false)
+}
+
 #------------------------
 # User Assigned Identity
 #------------------------
@@ -95,29 +125,29 @@ module "user_assigned_identity" {
 #-----------------
 locals {
   storage_account_network_rules = {
-    # st-func-linux = {
-    #   subnet_details = {
-    #     default = {
-    #       vnet_rg_name = module.virtual_network["network"].resource_group_name
-    #       vnet_name    = module.virtual_network["network"].name
-    #       subnet_name  = module.virtual_network["network"].subnets["default"].name
-    #     },
-    #   }
-    # },
-    # st-func-windows = {
-    #   subnet_details = {
-    #     default = {
-    #       vnet_rg_name = module.virtual_network["network"].resource_group_name
-    #       vnet_name    = module.virtual_network["network"].name
-    #       subnet_name  = module.virtual_network["network"].subnets["default"].name
-    #     },
-    #   }
-    # },
+    st-func-linux = {
+      subnet_details = {
+        default = {
+          vnet_rg_name = module.virtual_network["network"].resource_group_name
+          vnet_name    = module.virtual_network["network"].name
+          subnet_name  = module.virtual_network["network"].subnets["default"].name
+        },
+      }
+    },
+    st-func-windows = {
+      subnet_details = {
+        default = {
+          vnet_rg_name = module.virtual_network["network"].resource_group_name
+          vnet_name    = module.virtual_network["network"].name
+          subnet_name  = module.virtual_network["network"].subnets["default"].name
+        },
+      }
+    },
   }
 }
 
 module "storage_account" {
-  source = "git::https://github.com/QuestOpsHub/terraform-azurerm-storage-account.git?ref=v1.0.0"
+  source = "git::https://github.com/QuestOpsHub/QuestOpsHub-terraform-azure-modules.git//storageAccount?ref=main"
 
   for_each                         = var.storage_account
   name                             = lower(replace("${each.value.name}-${local.resource_suffix}-${module.random_string.result}", "/[[:^alnum:]]/", ""))

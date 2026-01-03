@@ -24,6 +24,11 @@ variable "resource_group" {}
 #-----------------
 variable "virtual_network" {}
 
+#---------------------------------------
+# Hub <-> Spoke Virtual Network Peering
+#---------------------------------------
+variable "hub_spoke_peering" {}
+
 #------------------------
 # User Assigned Identity
 #------------------------
