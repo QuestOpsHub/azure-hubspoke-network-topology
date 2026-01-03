@@ -273,7 +273,7 @@ linux_virtual_machine = {
     }
     user_data       = null
     zone            = 1
-    virtual_network = "network"
+    virtual_network = "default"
     subnet          = "default"
     ip_configuration = {
       name                          = "linuxVirtualMachineConfig"
