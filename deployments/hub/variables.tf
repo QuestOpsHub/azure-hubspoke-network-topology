@@ -23,3 +23,12 @@ variable "resource_group" {}
 # Virtual Network
 #-----------------
 variable "virtual_network" {}
+
+#-----------------------
+# Linux Virtual Machine
+#-----------------------
+variable "linux_virtual_machine" {}
+
+variable "admin_username" {}
+
+variable "admin_password" {}

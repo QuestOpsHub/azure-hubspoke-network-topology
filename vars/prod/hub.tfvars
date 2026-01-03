@@ -23,9 +23,9 @@ helpers = {
 # Resource Group
 #----------------
 resource_group = {
-  default = {
+  network = {
     name = "rg"
-  }
+  },
 }
 
 #-----------------
@@ -34,7 +34,7 @@ resource_group = {
 virtual_network = {
   default = {
     name           = "vnet"
-    resource_group = "default"
+    resource_group = "network"
     address_space  = ["20.0.0.0/16"]
     subnets = {
       default = {
@@ -68,7 +68,7 @@ virtual_network = {
 private_dns_zone = {
   sqlServer = {
     name           = "privatelink.database.windows.net"
-    resource_group = "default"
+    resource_group = "network"
     virtual_network_ids = [
       {
         name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
@@ -78,7 +78,7 @@ private_dns_zone = {
   },
   blob = {
     name           = "privatelink.blob.core.windows.net"
-    resource_group = "default"
+    resource_group = "network"
     virtual_network_ids = [
       {
         name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
@@ -88,7 +88,7 @@ private_dns_zone = {
   },
   vault = {
     name           = "privatelink.vaultcore.azure.net"
-    resource_group = "default"
+    resource_group = "network"
     virtual_network_ids = [
       {
         name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
@@ -98,7 +98,7 @@ private_dns_zone = {
   },
   registry = {
     name           = "privatelink.azurecr.io"
-    resource_group = "default"
+    resource_group = "network"
     virtual_network_ids = [
       {
         name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
@@ -108,7 +108,7 @@ private_dns_zone = {
   },
   dataFactory = {
     name           = "privatelink.datafactory.azure.net"
-    resource_group = "default"
+    resource_group = "network"
     virtual_network_ids = [
       {
         name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
@@ -118,7 +118,7 @@ private_dns_zone = {
   },
   MongoDB = {
     name           = "privatelink.mongo.cosmos.azure.com"
-    resource_group = "default"
+    resource_group = "network"
     virtual_network_ids = [
       {
         name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
@@ -128,12 +128,209 @@ private_dns_zone = {
   },
   Sql = {
     name           = "privatelink.documents.azure.com"
-    resource_group = "default"
+    resource_group = "network"
     virtual_network_ids = [
       {
         name    = "dns-vnet-qoh-hub-jumpbox-cus-link"
         vnet_id = "/subscriptions/ba143abd-03c0-43fc-bb1f-5bf74803b418/resourceGroups/rg-qoh-hub-jumpbox-cus/providers/Microsoft.Network/virtualNetworks/vnet-qoh-hub-jumpbox-cus"
       }
     ]
+  },
+}
+
+#------------------------
+# Network Security Group
+#------------------------
+network_security_group = {
+  # Bastion
+  bastion = {
+    name            = "nsg-AzureBastionSubnet"
+    resource_group  = "network"
+    virtual_network = "default"
+    subnet          = "bastion"
+    inbound_rules = [
+      {
+        name                       = "AllowHttpsInbound"
+        priority                   = 120
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_address_prefix      = "Internet"
+        source_port_range          = "*"
+        destination_address_prefix = "*"
+        destination_port_ranges    = ["443"]
+        description                = "AllowHttpsInbound"
+      },
+      {
+        name                       = "AllowGatewayManagerInbound"
+        priority                   = 130
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_address_prefix      = "GatewayManager"
+        source_port_range          = "*"
+        destination_address_prefix = "*"
+        destination_port_ranges    = ["443"]
+        description                = "AllowGatewayManagerInbound"
+      },
+      {
+        name                       = "AllowAzureLoadBalancerInbound"
+        priority                   = 140
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_address_prefix      = "AzureLoadBalancer"
+        source_port_range          = "*"
+        destination_address_prefix = "*"
+        destination_port_ranges    = ["443"]
+        description                = "AllowAzureLoadBalancerInbound"
+      },
+      {
+        name                       = "AllowBastionHostCommunication"
+        priority                   = 150
+        access                     = "Allow"
+        protocol                   = "*"
+        source_address_prefix      = "VirtualNetwork"
+        source_port_range          = "*"
+        destination_address_prefix = "VirtualNetwork"
+        destination_port_ranges    = ["8080", "5701"]
+        description                = "AllowBastionHostCommunication"
+      }
+    ]
+    outbound_rules = [
+      {
+        name                       = "AllowSshRdpOutbound"
+        priority                   = 100
+        access                     = "Allow"
+        protocol                   = "*"
+        source_address_prefix      = "*"
+        source_port_range          = "*"
+        destination_address_prefix = "VirtualNetwork"
+        destination_port_ranges    = ["22", "3389"]
+        description                = "AllowSshRdpOutbound"
+      },
+      {
+        name                       = "AllowAzureCloudOutbound"
+        priority                   = 110
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_address_prefix      = "*"
+        source_port_range          = "*"
+        destination_address_prefix = "AzureCloud"
+        destination_port_ranges    = ["443"]
+        description                = "AllowAzureCloudOutbound"
+      },
+      {
+        name                       = "AllowBastionCommunication"
+        priority                   = 120
+        access                     = "Allow"
+        protocol                   = "*"
+        source_address_prefix      = "VirtualNetwork"
+        source_port_range          = "*"
+        destination_address_prefix = "VirtualNetwork"
+        destination_port_ranges    = ["8080", "5701"]
+        description                = "AllowBastionCommunication"
+      },
+      {
+        name                       = "AllowHttpOutbound"
+        priority                   = 130
+        access                     = "Allow"
+        protocol                   = "*"
+        source_address_prefix      = "*"
+        source_port_range          = "*"
+        destination_address_prefix = "Internet"
+        destination_port_ranges    = ["80"]
+        description                = "AllowHttpOutbound"
+      }
+    ]
+  },
+}
+
+#-----------------------
+# Linux Virtual Machine
+#-----------------------
+linux_virtual_machine = {
+  jumpbox = {
+    name           = "vm-lin-jumpbox"
+    resource_group = "network"
+    license_type   = null
+    size           = "Standard_B2s"
+    os_disk = {
+      caching              = "ReadWrite"
+      storage_account_type = "StandardSSD_LRS"
+      disk_size_gb         = "30"
+    }
+    allow_extension_operations = true
+    custom_data                = null
+    identity = {
+      type     = "UserAssigned"
+      identity = "vm"
+    }
+    provision_vm_agent = true
+    source_image_id    = null
+    source_image_reference = {
+      publisher = "canonical"
+      offer     = "0001-com-ubuntu-server-focal"
+      sku       = "20_04-lts-gen2"
+      version   = "latest"
+    }
+    user_data       = null
+    zone            = 1
+    virtual_network = "network"
+    subnet          = "default"
+    ip_configuration = {
+      name                          = "linuxVirtualMachineConfig"
+      private_ip_address_version    = "IPv4"
+      private_ip_address_allocation = "Dynamic"
+      primary                       = true
+    }
+    managed_disks = {
+      "disk01" = {
+        storage_account_type = "Standard_LRS"
+        create_option        = "Empty"
+        disk_size_gb         = "10"
+        edge_zone            = null
+        zone                 = 1
+        lun                  = "10"
+        caching              = "ReadWrite"
+      },
+      "disk02" = {
+        storage_account_type = "Standard_LRS"
+        create_option        = "Empty"
+        disk_size_gb         = "10"
+        edge_zone            = null
+        zone                 = 1
+        lun                  = "20"
+        caching              = "ReadWrite"
+      },
+      "disk03" = {
+        storage_account_type = "Standard_LRS"
+        create_option        = "Empty"
+        disk_size_gb         = "10"
+        edge_zone            = null
+        zone                 = 1
+        lun                  = "30"
+        caching              = "ReadWrite"
+      },
+      "disk04" = {
+        storage_account_type = "Standard_LRS"
+        create_option        = "Empty"
+        disk_size_gb         = "10"
+        edge_zone            = null
+        zone                 = 1
+        lun                  = "40"
+        caching              = "ReadWrite"
+      },
+    }
+    vm_extensions = {
+      "Nginx" = {
+        name                 = "Nginx"
+        publisher            = "Microsoft.Azure.Extensions"
+        type                 = "CustomScript"
+        type_handler_version = "2.0"
+        settings             = <<SETTINGS
+{
+ "commandToExecute": "sudo apt-get update && sudo apt-get install nginx -y && echo \"<html><body style='background-color:blue'><h1>Hello World from $(hostname)</h1></body></html>\" > /var/www/html/index.html && sudo systemctl restart nginx"
+}
+SETTINGS
+      }
+    }
   },
 }
