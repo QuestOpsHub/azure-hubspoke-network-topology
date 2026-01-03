@@ -15,7 +15,7 @@ locals {
 }
 
 module "linux_virtual_machine" {
-  source = "git::https://github.com/QuestOpsHub/terraform-azurerm-linux-virtual-machine.git?ref=v1.0.0"
+  source = "git::https://github.com/QuestOpsHub/terraform-azurerm-linux-virtual-machine.git?ref=v1.0.1"
 
   for_each                                               = var.linux_virtual_machine
   name                                                   = "${each.value.name}-${local.resource_suffix}-${module.random_string.result}"
