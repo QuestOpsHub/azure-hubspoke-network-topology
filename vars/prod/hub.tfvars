@@ -357,7 +357,7 @@ bastion_host = {
 #-----------------------
 linux_virtual_machine = {
   jumpbox = {
-    name           = "vm-lin-jumpbox"
+    name           = "vm-lin-jb"
     resource_group = "compute"
     license_type   = null
     size           = "Standard_B2s"
