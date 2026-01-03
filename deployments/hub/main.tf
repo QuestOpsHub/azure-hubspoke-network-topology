@@ -198,7 +198,7 @@ module "bastion_host" {
 
   for_each                  = var.bastion_host
   name                      = "${each.value.name}-${local.resource_suffix}-${module.random_string.result}"
-  location                  = var.helpers.location
+  location                  = var.helpers.region
   resource_group_name       = module.resource_group[each.value.resource_group].name
   copy_paste_enabled        = lookup(each.value, "copy_paste_enabled", true)
   file_copy_enabled         = lookup(each.value, "file_copy_enabled", false)
