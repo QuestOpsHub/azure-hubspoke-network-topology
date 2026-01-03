@@ -67,8 +67,8 @@ virtual_network = {
 # User Identity
 #---------------
 user_assigned_identity = {
-  vm-linux = {
-    name           = "id-vm-linux"
+  vm-lin = {
+    name           = "id-vm-lin"
     resource_group = "compute"
   },
   vm-windows = {
@@ -328,7 +328,7 @@ network_security_group = {
 #-----------------------
 linux_virtual_machine = {
   jumpbox = {
-    name           = "vm-linux-jumpbox"
+    name           = "vm-lin-jumpbox"
     resource_group = "network"
     license_type   = null
     size           = "Standard_B2s"
@@ -341,7 +341,7 @@ linux_virtual_machine = {
     custom_data                = null
     identity = {
       type     = "UserAssigned"
-      identity = "vm-linux"
+      identity = "vm-lin"
     }
     provision_vm_agent = true
     source_image_id    = null
