@@ -133,7 +133,7 @@ module "network_security_group" {
   for_each            = var.network_security_group
   name                = each.value.name
   resource_group_name = module.resource_group[each.value.resource_group].name
-  location            = var.helpers.location
+  location            = var.helpers.region
   inbound_rules       = each.value.inbound_rules
   outbound_rules      = each.value.outbound_rules
   subnet_id           = module.virtual_network[each.value.virtual_network].subnets[each.value.subnet].id
@@ -170,7 +170,7 @@ module "linux_virtual_machine" {
   for_each                                               = var.linux_virtual_machine
   name                                                   = "${each.value.name}-${local.resource_suffix}-${module.random_string.result}"
   resource_group_name                                    = module.resource_group[each.value.resource_group].name
-  location                                               = var.helpers.location
+  location                                               = var.helpers.region
   admin_username                                         = var.admin_username
   admin_password                                         = var.admin_password
   license_type                                           = lookup(each.value, "license_type", null)
