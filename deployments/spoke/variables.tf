@@ -9,6 +9,15 @@ variable "client_secret" {}
 
 variable "tenant_id" {}
 
+#---------------
+# Hub Providers
+#---------------
+variable "hub_subscription_id" {}
+
+variable "hub_client_id" {}
+
+variable "hub_client_secret" {}
+
 #--------
 # Locals
 #--------
@@ -38,3 +47,9 @@ variable "user_assigned_identity" {}
 # Storage Account
 #-----------------
 variable "storage_account" {}
+
+# MISC
+
+variable "admin_username" {}
+
+variable "admin_password" {}
