@@ -18,3 +18,15 @@ provider "azurerm" {
   tenant_id       = var.tenant_id
   features {}
 }
+
+#---------------
+# Hub Providers
+#---------------
+provider "azurerm" {
+  alias           = "hub"
+  subscription_id = var.hub_subscription_id
+  client_id       = var.hub_client_id
+  client_secret   = var.hub_client_secret
+  tenant_id       = var.tenant_id
+  features {}
+}
