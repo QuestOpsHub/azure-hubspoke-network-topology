@@ -140,21 +140,21 @@ module "user_assigned_identity" {
 #-----------------
 locals {
   storage_account_network_rules = {
-    st-func-linux = {
+    st-func-lin = {
       subnet_details = {
         default = {
-          vnet_rg_name = module.virtual_network["network"].resource_group_name
-          vnet_name    = module.virtual_network["network"].name
-          subnet_name  = module.virtual_network["network"].subnets["default"].name
+          vnet_rg_name = module.virtual_network["default"].resource_group_name
+          vnet_name    = module.virtual_network["default"].name
+          subnet_name  = module.virtual_network["default"].subnets["default"].name
         },
       }
     },
-    st-func-windows = {
+    st-func-win = {
       subnet_details = {
         default = {
-          vnet_rg_name = module.virtual_network["network"].resource_group_name
-          vnet_name    = module.virtual_network["network"].name
-          subnet_name  = module.virtual_network["network"].subnets["default"].name
+          vnet_rg_name = module.virtual_network["default"].resource_group_name
+          vnet_name    = module.virtual_network["default"].name
+          subnet_name  = module.virtual_network["default"].subnets["default"].name
         },
       }
     },

@@ -24,23 +24,14 @@ resource_group = {
   network = {
     name = "rg-network"
   },
-  app-linux = {
-    name = "rg-app-linux"
+  compute = {
+    name = "rg-compute"
   },
-  app-windows = {
-    name = "rg-app-windows"
+  security = {
+    name = "rg-security"
   },
-  func-linux = {
-    name = "rg-func-linux"
-  },
-  func-windows = {
-    name = "rg-func-windows"
-  },
-  kv = {
-    name = "rg-kv"
-  },
-  cosmosdb = {
-    name = "rg-cosmosdb"
+  database = {
+    name = "rg-database"
   },
 }
 
@@ -48,8 +39,8 @@ resource_group = {
 # Virtual Network
 #-----------------
 virtual_network = {
-  network = {
-    name           = "vnet-network"
+  default = {
+    name           = "vnet"
     resource_group = "network"
     address_space  = ["24.0.0.0/16"]
     subnets = {
@@ -66,8 +57,8 @@ virtual_network = {
 # Hub <-> Spoke Virtual Network Peering
 #---------------------------------------
 hub_spoke_peering = {
-  hub_vnet                           = "network"
-  spoke_vnet                         = "network"
+  hub_vnet                           = "default"
+  spoke_vnet                         = "default"
   peer1_allow_virtual_network_access = true
   peer1_allow_forwarded_traffic      = true
   peer1_allow_gateway_transit        = true
@@ -82,33 +73,33 @@ hub_spoke_peering = {
 # User Identity
 #---------------
 user_assigned_identity = {
-  app-linux = {
-    name           = "id-app-linux"
-    resource_group = "app-linux"
+  app-lin = {
+    name           = "id-app-lin"
+    resource_group = "compute"
   },
-  app-windows = {
+  app-win = {
     name           = "id-app-win"
-    resource_group = "app-windows"
+    resource_group = "compute"
   },
-  func-linux = {
-    name           = "id-func-linux"
-    resource_group = "func-linux"
+  func-lin = {
+    name           = "id-func-lin"
+    resource_group = "compute"
   },
-  func-windows = {
+  func-win = {
     name           = "id-func-win"
-    resource_group = "func-windows"
+    resource_group = "compute"
   },
-  st-func-linux = {
-    name           = "id-st-func-linux"
-    resource_group = "func-linux"
+  st-func-lin = {
+    name           = "id-st-func-lin"
+    resource_group = "compute"
   },
-  st-func-windows = {
+  st-func-win = {
     name           = "id-st-func-win"
-    resource_group = "func-windows"
+    resource_group = "compute"
   },
   cosmon = {
     name           = "id-cosmon"
-    resource_group = "cosmosdb"
+    resource_group = "database"
   },
 }
 
@@ -116,17 +107,17 @@ user_assigned_identity = {
 # Storage Account
 #-----------------
 storage_account = {
-  # Storage Account used by the Linux Function App(s)
-  st-func-linux = {
-    name                     = "st-func-linux"
-    resource_group           = "func-linux"
+  # Storage Account used by the lin Function App(s)
+  func-lin = {
+    name                     = "st-func-lin"
+    resource_group           = "compute"
     account_tier             = "Standard"
     account_replication_type = "LRS"
     is_hns_enabled           = false
     nfsv3_enabled            = true
     identity = {
       type     = "UserAssigned"
-      identity = "st-func-linux"
+      identity = "st-func-lin"
     }
     blob_properties = {
       cors_rule = {
@@ -163,17 +154,17 @@ storage_account = {
       private_link_access = {}
     }
   },
-  # Storage Account used by the Windows Function App(s)
-  st-func-windows = {
+  # Storage Account used by the win Function App(s)
+  st-func-win = {
     name                     = "st-func-win"
-    resource_group           = "func-windows"
+    resource_group           = "compute"
     account_tier             = "Standard"
     account_replication_type = "LRS"
     is_hns_enabled           = false
     nfsv3_enabled            = true
     identity = {
       type     = "UserAssigned"
-      identity = "st-func-windows"
+      identity = "st-func-win"
     }
     blob_properties = {
       cors_rule = {
