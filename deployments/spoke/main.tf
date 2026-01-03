@@ -140,7 +140,7 @@ module "user_assigned_identity" {
 #-----------------
 locals {
   storage_account_network_rules = {
-    st-func-lin = {
+    func-lin = {
       subnet_details = {
         default = {
           vnet_rg_name = module.virtual_network["default"].resource_group_name
@@ -149,7 +149,7 @@ locals {
         },
       }
     },
-    st-func-win = {
+    func-win = {
       subnet_details = {
         default = {
           vnet_rg_name = module.virtual_network["default"].resource_group_name
