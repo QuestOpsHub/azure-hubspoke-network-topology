@@ -5,6 +5,21 @@ terraform {
   backend "azurerm" {}
 }
 
+#-------------
+# Hub Backend
+#-------------
+data "terraform_remote_state" "hub" {
+  backend = "azurerm"
+  config = {
+    resource_group_name  = "rg-p01-tf-backend"
+    storage_account_name = "stp01tfbackend9434"
+    container_name       = "hub-tfstate"
+    key                  = "prod/hub.prod.tfstate"
+    subscription_id      = var.hub_subscription_id
+    access_key           = data.azurerm_storage_account.storage_account.primary_access_key
+  }
+}
+
 #---------------
 # Random String
 #---------------
