@@ -39,6 +39,16 @@ variable "user_assigned_identity" {}
 #------------------------
 variable "network_security_group" {}
 
+#-----------
+# Public IP
+#-----------
+variable "public_ip" {}
+
+#--------------
+# Bastion Host
+#--------------
+variable "bastion_host" {}
+
 #-----------------------
 # Linux Virtual Machine
 #-----------------------

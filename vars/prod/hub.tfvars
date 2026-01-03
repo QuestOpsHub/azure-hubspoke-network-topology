@@ -80,6 +80,7 @@ user_assigned_identity = {
 #------------------
 # Private Dns Zone
 #------------------
+# @todo Update `virtual_network_ids` after the Virtual Network is created.
 private_dns_zone = {
   sqlServer = {
     name           = "privatelink.database.windows.net"
@@ -321,6 +322,34 @@ network_security_group = {
       },
     ]
   }
+}
+
+#-----------
+# Public IP
+#-----------
+public_ip = {
+  bastion = {
+    name              = "ip-bas"
+    resource_group    = "network"
+    allocation_method = "Static"
+    sku               = "Standard"
+    sku_tier          = "Regional"
+  },
+}
+
+#--------------
+# Bastion Host
+#--------------
+bastion_host = {
+  default = {
+    name           = "bas"
+    resource_group = "compute"
+    sku            = "Standard"
+    ip_configuration = {
+      name = "bastionHostConfig"
+    }
+    tunneling_enabled = true
+  },
 }
 
 #-----------------------

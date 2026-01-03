@@ -148,6 +148,81 @@ module "network_security_group" {
   )
 }
 
+#-----------
+# Public IP
+#-----------
+module "public_ip" {
+  source = "git::https://github.com/QuestOpsHub/terraform-azurerm-public-ip.git?ref=v1.0.0"
+
+  for_each                = var.public_ip
+  name                    = "${each.value.name}-${local.resource_suffix}-${module.random_string.result}"
+  location                = var.helpers.region
+  resource_group_name     = module.resource_group[each.value.resource_group].name
+  allocation_method       = each.value.allocation_method
+  zones                   = lookup(each.value, "zones", [1])
+  ddos_protection_mode    = lookup(each.value, "ddos_protection_mode", "VirtualNetworkInherited")
+  ddos_protection_plan_id = lookup(each.value, "ddos_protection_plan_id", null)
+  domain_name_label       = lookup(each.value, "domain_name_label", null)
+  edge_zone               = lookup(each.value, "edge_zone", null)
+  idle_timeout_in_minutes = lookup(each.value, "idle_timeout_in_minutes", 4)
+  ip_tags                 = lookup(each.value, "ip_tags", {})
+  public_ip_prefix_id     = lookup(each.value, "public_ip_prefix_id", null)
+  reverse_fqdn            = lookup(each.value, "reverse_fqdn", null)
+  sku                     = lookup(each.value, "sku", "Standard")
+  sku_tier                = lookup(each.value, "sku_tier", "Regional")
+
+  tags = merge(
+    local.timestamp_tag,
+    local.common_tags,
+    {
+      team  = lookup(each.value, "resource_tags", local.resource_tags).team
+      owner = lookup(each.value, "resource_tags", local.resource_tags).owner
+    }
+  )
+}
+
+#--------------
+# Bastion Host
+#--------------
+locals {
+  bastion_host_ip_configuration = {
+    default = {
+      subnet_id            = module.virtual_network["default"].subnets["bastion"].id
+      public_ip_address_id = module.public_ip["bastion"].id
+    }
+  }
+}
+
+module "bastion_host" {
+  source = "git::https://github.com/QuestOpsHub/terraform-azurerm-bastion-host.git?ref=v1.0.0"
+
+  for_each                  = var.bastion_host
+  name                      = "${each.value.name}-${local.resource_suffix}-${module.random_string.result}"
+  location                  = var.helpers.location
+  resource_group_name       = module.resource_group[each.value.resource_group].name
+  copy_paste_enabled        = lookup(each.value, "copy_paste_enabled", true)
+  file_copy_enabled         = lookup(each.value, "file_copy_enabled", false)
+  sku                       = lookup(each.value, "sku", "Basic")
+  ip_configuration          = merge(lookup(each.value, "ip_configuration", {}), local.bastion_host_ip_configuration[each.key])
+  ip_connect_enabled        = lookup(each.value, "ip_connect_enabled", false)
+  kerberos_enabled          = lookup(each.value, "kerberos_enabled", false)
+  scale_units               = lookup(each.value, "scale_units", 2)
+  shareable_link_enabled    = lookup(each.value, "shareable_link_enabled", false)
+  tunneling_enabled         = lookup(each.value, "tunneling_enabled", false)
+  session_recording_enabled = lookup(each.value, "session_recording_enabled", false)
+  virtual_network_id        = lookup(each.value, "virtual_network_id", null)
+  zones                     = lookup(each.value, "zones", [])
+
+  tags = merge(
+    local.timestamp_tag,
+    local.common_tags,
+    {
+      team  = lookup(each.value, "resource_tags", local.resource_tags).team
+      owner = lookup(each.value, "resource_tags", local.resource_tags).owner
+    }
+  )
+}
+
 #-----------------------
 # Linux Virtual Machine
 #-----------------------
