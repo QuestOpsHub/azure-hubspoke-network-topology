@@ -155,7 +155,7 @@ storage_account = {
     }
   },
   # Storage Account used by the win Function App(s)
-  st-func-win = {
+  func-win = {
     name                     = "st-func-win"
     resource_group           = "compute"
     account_tier             = "Standard"
