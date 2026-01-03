@@ -18,3 +18,10 @@ output "resource_group" {
 output "virtual_network" {
   value = module.virtual_network
 }
+
+#------------------
+# Private Dns Zone
+#------------------
+output "private_dns_zone" {
+  value = module.private_dns_zone
+}

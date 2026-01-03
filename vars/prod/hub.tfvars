@@ -2,21 +2,19 @@
 # Locals
 #--------
 helpers = {
-  project           = "questopshub"
-  project_short     = "qoh"
-  sub_project       = "project01"
-  sub_project_short = "p01"
-  environment       = "prod"
-  region            = "centralus"
-  region_short      = "cus"
-  deployment        = "hub"
-  deployment_short  = "hub"
-  source            = "terraform"
-  cost_center       = "6001"
-  reason            = "JIRA-12345"
-  created_by        = "veera-bhadra"
-  team              = "infrateam"
-  owner             = "veera-bhadra"
+  project          = "questopshub"
+  project_short    = "qoh"
+  environment      = "prod"
+  region           = "centralus"
+  region_short     = "cus"
+  deployment       = "hub"
+  deployment_short = "hub"
+  source           = "terraform"
+  cost_center      = "6001"
+  reason           = "JIRA-12345"
+  created_by       = "veera-bhadra"
+  team             = "infrateam"
+  owner            = "veera-bhadra"
 }
 
 #----------------
@@ -24,7 +22,10 @@ helpers = {
 #----------------
 resource_group = {
   network = {
-    name = "rg"
+    name = "rg-network"
+  },
+  compute = {
+    name = "rg-compute"
   },
 }
 
@@ -67,8 +68,12 @@ virtual_network = {
 #---------------
 user_assigned_identity = {
   vm-linux = {
-    name           = "id-vm-lin"
-    resource_group = "network"
+    name           = "id-vm-linux"
+    resource_group = "compute"
+  },
+  vm-windows = {
+    name           = "id-vm-windows"
+    resource_group = "compute"
   },
 }
 
@@ -323,7 +328,7 @@ network_security_group = {
 #-----------------------
 linux_virtual_machine = {
   jumpbox = {
-    name           = "vm-lin-jumpbox"
+    name           = "vm-linux-jumpbox"
     resource_group = "network"
     license_type   = null
     size           = "Standard_B2s"

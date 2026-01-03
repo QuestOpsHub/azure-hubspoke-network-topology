@@ -24,6 +24,11 @@ variable "resource_group" {}
 #-----------------
 variable "virtual_network" {}
 
+#------------------
+# Private Dns Zone
+#------------------
+variable "private_dns_zone" {}
+
 #------------------------
 # User Assigned Identity
 #------------------------

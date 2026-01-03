@@ -2,21 +2,19 @@
 # Locals
 #--------
 helpers = {
-  project           = "questopshub"
-  project_short     = "qoh"
-  sub_project       = "project01"
-  sub_project_short = "p01"
-  environment       = "dev"
-  region            = "centralus"
-  region_short      = "cus"
-  deployment        = "spoke"
-  deployment_short  = "sp"
-  source            = "terraform"
-  cost_center       = "6001"
-  reason            = "JIRA-12345"
-  created_by        = "veera-bhadra"
-  team              = "infrateam"
-  owner             = "veera-bhadra"
+  project          = "questopshub"
+  project_short    = "qoh"
+  environment      = "dev"
+  region           = "centralus"
+  region_short     = "cus"
+  deployment       = "spoke"
+  deployment_short = "sp"
+  source           = "terraform"
+  cost_center      = "6001"
+  reason           = "JIRA-12345"
+  created_by       = "veera-bhadra"
+  team             = "infrateam"
+  owner            = "veera-bhadra"
 }
 
 #----------------
