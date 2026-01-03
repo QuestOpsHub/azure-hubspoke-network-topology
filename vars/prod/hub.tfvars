@@ -254,7 +254,7 @@ network_security_group = {
         protocol                   = "Tcp"
         source_address_prefix      = "*"
         source_port_range          = "*"
-        destination_address_prefix = "31.0.0.0/20"
+        destination_address_prefix = "20.0.1.0/24" # default subnet address_prefixes
         destination_port_range     = "80"
         description                = "Allow HTTP traffic"
       },
@@ -265,7 +265,7 @@ network_security_group = {
         protocol                   = "Tcp"
         source_address_prefix      = "*"
         source_port_range          = "*"
-        destination_address_prefix = "31.0.0.0/20"
+        destination_address_prefix = "20.0.1.0/24" # default subnet address_prefixes
         destination_port_range     = "443"
         description                = "Allow HTTPS traffic"
       },
@@ -276,7 +276,7 @@ network_security_group = {
         protocol                   = "Tcp"
         source_address_prefix      = "*"
         source_port_range          = "*"
-        destination_address_prefix = "31.0.0.0/20"
+        destination_address_prefix = "20.0.1.0/24" # default subnet address_prefixes
         destination_port_range     = "22"
         description                = "Allow SSH access for Linux VMs"
       },
@@ -287,7 +287,7 @@ network_security_group = {
         protocol                   = "Tcp"
         source_address_prefix      = "*"
         source_port_range          = "*"
-        destination_address_prefix = "31.0.0.0/20"
+        destination_address_prefix = "20.0.1.0/24" # default subnet address_prefixes
         destination_port_range     = "3389"
         description                = "Allow RDP access for Windows VMs"
       },
