@@ -62,6 +62,16 @@ virtual_network = {
   }
 }
 
+#---------------
+# User Identity
+#---------------
+user_assigned_identity = {
+  vm-linux = {
+    name           = "id-vm-lin"
+    resource_group = "network"
+  },
+}
+
 #------------------
 # Private Dns Zone
 #------------------
@@ -326,7 +336,7 @@ linux_virtual_machine = {
     custom_data                = null
     identity = {
       type     = "UserAssigned"
-      identity = "vm"
+      identity = "vm-linux"
     }
     provision_vm_agent = true
     source_image_id    = null

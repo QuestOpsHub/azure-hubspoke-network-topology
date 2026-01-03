@@ -24,6 +24,16 @@ variable "resource_group" {}
 #-----------------
 variable "virtual_network" {}
 
+#------------------------
+# User Assigned Identity
+#------------------------
+variable "user_assigned_identity" {}
+
+#------------------------
+# Network Security Group    
+#------------------------
+variable "network_security_group" {}
+
 #-----------------------
 # Linux Virtual Machine
 #-----------------------
