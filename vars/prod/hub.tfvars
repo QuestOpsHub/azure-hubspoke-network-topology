@@ -71,8 +71,8 @@ user_assigned_identity = {
     name           = "id-vm-lin"
     resource_group = "compute"
   },
-  vm-windows = {
-    name           = "id-vm-windows"
+  vm-win = {
+    name           = "id-vm-win"
     resource_group = "compute"
   },
 }
