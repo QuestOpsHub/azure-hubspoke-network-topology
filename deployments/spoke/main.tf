@@ -167,7 +167,7 @@ module "storage_account" {
   for_each                         = var.storage_account
   name                             = lower(replace("${each.value.name}-${local.resource_suffix}-${module.random_string.result}", "/[[:^alnum:]]/", ""))
   resource_group_name              = module.resource_group[each.value.resource_group].name
-  location                         = var.helpers.location
+  location                         = var.helpers.region
   account_kind                     = lookup(each.value, "account_kind", "StorageV2")
   account_tier                     = lookup(each.value, "account_tier", "Standard")
   edge_zone                        = lookup(each.value, "edge_zone", null)
