@@ -67,6 +67,8 @@ jobs:
             -var client_id=${{ fromJson(secrets[inputs.TF_CREDS]).clientId }} \
             -var client_secret=${{ fromJson(secrets[inputs.TF_CREDS]).clientSecret }} \
             -var tenant_id=${{ fromJson(secrets[inputs.TF_CREDS]).tenantId }} \
+            -var admin_username=${{ env.admin_username }} \
+            -var admin_password=${{ env.admin_password }} \
             -var-file=${{ github.workspace }}/vars/${{ inputs.environment }}/hub.tfvars | tee hub-${{ inputs.environment }}.txt
         working-directory: deployments/hub
 
@@ -87,6 +89,8 @@ jobs:
             -var client_id=${{ fromJson(secrets[inputs.TF_CREDS]).clientId }} \
             -var client_secret=${{ fromJson(secrets[inputs.TF_CREDS]).clientSecret }} \
             -var tenant_id=${{ fromJson(secrets[inputs.TF_CREDS]).tenantId }} \
+            -var admin_username=${{ env.admin_username }} \
+            -var admin_password=${{ env.admin_password }} \
             -var-file=${{ github.workspace }}/vars/${{ inputs.environment }}/hub.tfvars | tee hub-${{ inputs.environment }}.txt
         working-directory: deployments/hub
 
@@ -157,6 +161,8 @@ jobs:
             -var client_id=${{ fromJson(secrets[inputs.TF_CREDS]).clientId }} \
             -var client_secret=${{ fromJson(secrets[inputs.TF_CREDS]).clientSecret }} \
             -var tenant_id=${{ fromJson(secrets[inputs.TF_CREDS]).tenantId }} \
+            -var admin_username=${{ env.admin_username }} \
+            -var admin_password=${{ env.admin_password }} \
             -var-file=${{ github.workspace }}/vars/${{ inputs.environment }}/hub.tfvars
         working-directory: deployments/hub
 
