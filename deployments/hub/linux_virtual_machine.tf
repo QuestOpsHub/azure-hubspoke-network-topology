@@ -10,7 +10,7 @@ locals {
   custom_data = {
     jumpbox = {
       custom_data = filebase64("${path.module}/mountDisks.sh")
-    }
+    },
   }
 }
 

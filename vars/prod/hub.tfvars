@@ -241,6 +241,71 @@ network_security_group = {
       }
     ]
   },
+  default = {
+    name            = "nsg-default"
+    resource_group  = "network"
+    virtual_network = "default"
+    subnet          = "default"
+    inbound_rules = [
+      {
+        name                       = "AllowHTTPInbound"
+        priority                   = 100
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_address_prefix      = "*"
+        source_port_range          = "*"
+        destination_address_prefix = "31.0.0.0/20"
+        destination_port_range     = "80"
+        description                = "Allow HTTP traffic"
+      },
+      {
+        name                       = "AllowHTTPSInbound"
+        priority                   = 110
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_address_prefix      = "*"
+        source_port_range          = "*"
+        destination_address_prefix = "31.0.0.0/20"
+        destination_port_range     = "443"
+        description                = "Allow HTTPS traffic"
+      },
+      {
+        name                       = "AllowSSHInbound"
+        priority                   = 120
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_address_prefix      = "*"
+        source_port_range          = "*"
+        destination_address_prefix = "31.0.0.0/20"
+        destination_port_range     = "22"
+        description                = "Allow SSH access for Linux VMs"
+      },
+      {
+        name                       = "AllowRDPInbound"
+        priority                   = 130
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_address_prefix      = "*"
+        source_port_range          = "*"
+        destination_address_prefix = "31.0.0.0/20"
+        destination_port_range     = "3389"
+        description                = "Allow RDP access for Windows VMs"
+      },
+    ]
+    outbound_rules = [
+      {
+        name                       = "AllowAllOutbound"
+        priority                   = 100
+        access                     = "Allow"
+        protocol                   = "*"
+        source_address_prefix      = "*"
+        source_port_range          = "*"
+        destination_address_prefix = "*"
+        destination_port_range     = "*"
+        description                = "Allow all outbound traffic"
+      },
+    ]
+  }
 }
 
 #-----------------------
